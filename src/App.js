@@ -3,6 +3,7 @@ import './App.css';
 import List from './components/List';
 import Search from './components/Search';
 import { countries } from './data/data';
+import useDebounce from './hooks/useDebounce';
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
@@ -20,13 +21,15 @@ function App() {
     setDisplayCountries(filterCountries);
   },[searchValue]);
 
-  useEffect(() => {
-    const timer = setTimeout(filterHandler, 3000)
+  useDebounce(filterHandler, 1000)
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [searchValue, filterHandler]);
+  // useEffect(() => {
+  //   const timer = setTimeout(filterHandler, 3000)
+
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [searchValue, filterHandler]);
 
   return (
     <div className="App">
