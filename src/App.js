@@ -5,11 +5,33 @@ import Search from './components/Search';
 import { countries } from './data/data';
 
 function App() {
+  const [searchValue, setSearchValue] = useState('');
+  const [displayCountries, setDisplayCountries] = useState(countries);
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+    setSearchValue(e.target.value);
+  };
+
+  const filterHandler = useCallback(() => {
+    const filterCountries = countries.filter(({ name }) =>
+      name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setDisplayCountries(filterCountries);
+  },[searchValue]);
+
+  useEffect(() => {
+    const timer = setTimeout(filterHandler, 3000)
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchValue, filterHandler]);
+
   return (
     <div className="App">
       <h1>Countries</h1>
-        <hi>Countries</hi> 
-        <List countries={countries}/>
+      <Search changeHandler={searchHandler} inputValue={searchValue} />
       <List countries={displayCountries} />
     </div>
   );
