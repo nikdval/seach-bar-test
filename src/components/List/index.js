@@ -5,10 +5,9 @@ const List = ({ countries }) => {
     <ul className='List'>
       {
         countries.map(({name}) => (
-          <li>{name}</li>
+          <li key={name}>{name}</li>
         ))
       }
-      <li>Test</li>
     </ul>
   );
 };
